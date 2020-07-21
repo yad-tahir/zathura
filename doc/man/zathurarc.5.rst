@@ -873,6 +873,12 @@ zathura
   * Value type: Boolean
   * Default value: false
 
+*window-title-progress*
+  Display the page number as percentage in the window title. This option overrides the 'window-title-page' option.
+
+  * Value type: Boolean
+  * Default value: false
+
 *statusbar-basename*
   Use basename of the file in the statusbar.
 

@@ -1533,7 +1533,21 @@ statusbar_page_number_update(zathura_t* zathura)
       g_free(filename);
     }
 
-    g_free(page_number_text);
+	bool progress_in_window_title = false;
+	girara_setting_get(zathura->ui.session, "window-title-progress", &progress_in_window_title);
+
+	if (progress_in_window_title == true) {
+	  char* filename = get_formatted_filename(zathura, false);
+	  float progress = 0;
+	  if(number_of_pages != 0)
+		progress = (current_page_number + 1) * 100 / number_of_pages;
+	  char* title = g_strdup_printf("%s %.0f%%", filename, progress);
+	  girara_set_window_title(zathura->ui.session, title);
+	  g_free(title);
+	  g_free(filename);
+	}
+
+	g_free(page_number_text);
   } else {
     girara_statusbar_item_set_text(zathura->ui.session, zathura->ui.statusbar.page_number, "");
   }
