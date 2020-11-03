@@ -463,14 +463,11 @@ plain_remove_bookmark(zathura_database_t* db, const char* file, const char* id)
   }
 
   char* name = prepare_filename(file);
-  if (g_key_file_has_group(priv->bookmarks, name) == TRUE) {
-    if (g_key_file_remove_key(priv->bookmarks, name, id, NULL) == TRUE) {
+  if (g_key_file_has_group(priv->bookmarks, name) == TRUE && g_key_file_remove_key(priv->bookmarks, name, id, NULL) == TRUE) {
+    zathura_db_write_key_file_to_file(priv->bookmark_path, priv->bookmarks);
+    g_free(name);
 
-      zathura_db_write_key_file_to_file(priv->bookmark_path, priv->bookmarks);
-      g_free(name);
-
-      return true;
-    }
+    return true;
   }
   g_free(name);
 
@@ -898,7 +895,7 @@ zathura_plaindatabase_class_init(ZathuraPlainDatabaseClass* class)
   object_class->set_property = plain_set_property;
 
   g_object_class_install_property(object_class, PROP_PATH,
-    g_param_spec_string("path", "path", "path to directory where the bookmarks and history are locates",
+    g_param_spec_string("path", "path", "path to directory where the bookmarks and history are located",
       NULL, G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS));
 }
 
