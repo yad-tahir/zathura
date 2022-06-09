@@ -113,6 +113,8 @@ General
     Follow links
   F
     Display link target
+  c
+    Copy link target into the clipboard
   \:
     Enter command
   r
@@ -223,7 +225,8 @@ close
   Close document
 
 exec
-  Execute an external command
+  Execute an external command. ``$FILE`` expands to the current document path,
+  and ``$PAGE`` to the current page number
 
 info
   Show document information
